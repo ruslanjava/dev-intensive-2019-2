@@ -27,7 +27,7 @@ fun Activity.isKeyboardClosed() : Boolean {
     val rect = Rect()
     val rootView = this.window.decorView.rootView
     rootView.getWindowVisibleDisplayFrame(rect)
-    val heightDiff = (rootView.height - (rect.bottom - rect.top)) as Double
+    val heightDiff = (rootView.height - (rect.bottom - rect.top)).toDouble()
     val heightDiffPercent = (heightDiff / rootView.height)
     return heightDiffPercent <= 0.2
 }
