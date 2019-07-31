@@ -1,4 +1,4 @@
-package ru.skillbranch.devintensive.ui.profile.custom
+package ru.skillbranch.devintensive.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet
