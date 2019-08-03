@@ -26,7 +26,7 @@ object PreferencesRepository {
         putValue(APP_THEME to theme)
     }
 
-    fun getAppTheme() : Int = prefs.getInt(APP_THEME, AppCompatDelegate.MODE_NIGHT_NO)
+    fun getAppTheme(): Int = prefs.getInt(APP_THEME, AppCompatDelegate.MODE_NIGHT_NO)
 
     fun saveProfile(profile: Profile) {
         with(profile) {
@@ -40,12 +40,12 @@ object PreferencesRepository {
     }
 
     fun getProfile(): Profile = Profile(
-            prefs.getString(FIRST_NAME, "")!!,
-            prefs.getString(LAST_NAME, "")!!,
-            prefs.getString(ABOUT, "")!!,
-            prefs.getString(REPOSITORY, "")!!,
-            prefs.getInt(RATING, 0),
-            prefs.getInt(RESPECT, 0)
+        prefs.getString(FIRST_NAME, "")!!,
+        prefs.getString(LAST_NAME, "")!!,
+        prefs.getString(ABOUT, "")!!,
+        prefs.getString(REPOSITORY, "")!!,
+        prefs.getInt(RATING, 0),
+        prefs.getInt(RESPECT, 0)
     )
 
     private fun putValue(pair: Pair<String, Any>) = with(prefs.edit()) {
@@ -61,9 +61,7 @@ object PreferencesRepository {
             else -> error("Only primitives types can be stored in Shared Preferences")
         }
 
-        apply() {
-
-        }
+        apply()
     }
 
 }
