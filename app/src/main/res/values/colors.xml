@@ -12,4 +12,23 @@
 
     <color name="color_divider_dark">#1F000000</color>
     <color name="color_divider_light">#1FFFFFFF</color>
+    <color name="color_indicator">#581F99</color>
+    <color name="color_green">#4FD149</color>
+
+    <color name="red">#e17770</color>
+    <color name="orange">#de7a6a</color>
+    <color name="yellow">#f4a36e</color>
+    <color name="green">#70b35b</color>
+    <color name="blue">#64b9c3</color>
+    <color name="violet">#a295e2</color>
+
+    <array name="rainbow">
+        <item>@color/red</item>
+        <item>@color/orange</item>
+        <item>@color/yellow</item>
+        <item>@color/green</item>
+        <item>@color/blue</item>
+        <item>@color/violet</item>
+    </array>
+
 </resources>

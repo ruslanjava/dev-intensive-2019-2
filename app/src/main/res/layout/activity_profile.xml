@@ -194,7 +194,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/space_maximum_72"
+            android:layout_marginLeft="@dimen/spacing_maximum_72"
             android:background="?attr/colorDivider"/>
 
     <LinearLayout
@@ -231,7 +231,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/space_maximum_72"
+            android:layout_marginLeft="@dimen/spacing_maximum_72"
             android:background="?attr/colorDivider"/>
 
     <LinearLayout

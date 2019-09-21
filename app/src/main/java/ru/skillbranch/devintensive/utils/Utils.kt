@@ -2,7 +2,7 @@ package ru.skillbranch.devintensive.utils
 
 object Utils {
 
-    val russianToLatin = mapOf<String, String>(
+    val russianToLatin = mapOf(
         "а" to "a",  "б" to "b",   "в" to "v",  "г" to "g",  "д" to "d",
         "е" to "e",  "ё" to "yo",  "ж" to "zh", "з" to "z",  "и" to "i",
         "й" to "y",  "к" to "k",   "л" to "l",  "м" to "m",  "н" to "n",
