@@ -42,7 +42,13 @@ class MainActivity : AppCompatActivity() {
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         val touchCallback = ChatItemTouchHelperCallback(chatAdapter) {
             viewModel.addToArchive(it.id)
-            Snackbar.make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архив", Snackbar.LENGTH_LONG).show()
+            val chatItemId = it.id
+            val snackbar = Snackbar.make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архив?", Snackbar.LENGTH_LONG)
+            snackbar.setAction(getString(android.R.string.cancel)) {
+                viewModel.restoreFromArchive(chatItemId)
+                snackbar.dismiss()
+            }
+            snackbar.show()
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_chat_list)

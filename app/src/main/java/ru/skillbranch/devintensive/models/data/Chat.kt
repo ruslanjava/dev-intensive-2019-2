@@ -35,7 +35,7 @@ data class Chat(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun lastMessageShort(): Pair<String, String> {
         val user = members.first()
-        val userName = "${user.firstName ?: ""} ${user.lastName ?: ""}"
+        val userName = "${user.firstName ?: ""}"
 
         var text = "Сообщений еще нет"
         if (messages.size > 0) {
