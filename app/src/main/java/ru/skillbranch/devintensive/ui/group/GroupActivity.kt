@@ -1,7 +1,6 @@
 package ru.skillbranch.devintensive.ui.group
 
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_group.*
@@ -60,7 +58,7 @@ class GroupActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item?.itemId == android.R.id.home) {
+        return if (item.itemId == android.R.id.home) {
             finish()
             overridePendingTransition(R.anim.idle, R.anim.bottom_down)
             true

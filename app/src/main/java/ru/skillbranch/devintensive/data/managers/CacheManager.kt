@@ -15,12 +15,16 @@ object CacheManager {
         return chats
     }
 
-    fun update(copy: Unit) {
-
+    fun update(chat: Chat) {
+        val copy = chats.value!!.toMutableList()
+        val index = copy.indexOfFirst { it.id == chat.id }
+        copy.set(index, chat)
+        chats.value = copy
     }
 
     fun find(chatId: String): Chat? {
-        return null
+        val copy = chats.value!!.toMutableList()
+        return copy.find { it.id == chatId }
     }
 
     fun findUsersByIds(ids: List<String>) : List<User> {
