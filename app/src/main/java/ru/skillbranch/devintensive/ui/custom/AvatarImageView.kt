@@ -1,66 +1,53 @@
 package ru.skillbranch.devintensive.ui.custom
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import android.util.AttributeSet
 import ru.skillbranch.devintensive.R
 
 class AvatarImageView @JvmOverloads constructor(
     context: Context,
-    attrs : AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : CircleImageView(context, attrs, defStyleAttr) {
-
-    private var initials : String = "??"
-    private var textPaint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
-
-    private var initialsX : Float = 0.0f
-    private var letterY : Float = 0.0f
-    private var textRect: Rect = Rect()
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0)
+    : CircleImageView(context, attrs, defStyleAttr) {
+    private lateinit var paint: Paint
+    private lateinit var bitmap: Bitmap
+    private lateinit var canvas: Canvas
 
     private var colors: IntArray
 
     init {
-        textPaint.setColor(resources.getColor(android.R.color.white, context.theme))
-        textPaint.setTextAlign(Paint.Align.CENTER)
-        textPaint.textSize = convertDpToPixel(16.0f, context)
-
         colors = resources.getIntArray(R.array.rainbow)
-        setInitials(initials)
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = MeasureSpec.getSize(widthMeasureSpec)
-        val height = MeasureSpec.getSize(heightMeasureSpec)
-        setMeasuredDimension(width, height)
-        letterY = (height / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)
-    }
-
-    override fun onDraw(canvas : Canvas) {
-        super.onDraw(canvas)
-
-        if (hasAvatar) {
-            return
-        }
-
-        textPaint.getTextBounds(initials, 0, initials.length, textRect)
-        initialsX = width * 0.5f
-        canvas.drawText(initials, initialsX, letterY, textPaint)
-    }
-
-    fun convertDpToPixel(dp: Float, context: Context): Float {
-        val resources = context.resources
-        val metrics = resources.displayMetrics
-        return dp * (metrics.densityDpi / 160f)
     }
 
     fun setInitials(initials: String) {
-        this.initials = initials
+        paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.textSize = layoutParams.height/2.33f
+            color = Color.WHITE
+            textAlign = Paint.Align.CENTER
+        }
+
+        val textBounds = Rect()
+        paint.getTextBounds(initials, 0, initials.length, textBounds)
+        val backgroundBounds = RectF()
+        backgroundBounds.set(0f, 0f, layoutParams.width.toFloat(), layoutParams.height.toFloat())
+        val textBottom = backgroundBounds.centerY() - textBounds.exactCenterY()
+
+        bitmap = Bitmap.createBitmap(
+            layoutParams.width,
+            layoutParams.height,
+            Bitmap.Config.ARGB_8888
+        )
+        bitmap.eraseColor(getColorFromInitials(initials))
+        canvas = Canvas(bitmap)
+        canvas.drawText(initials, backgroundBounds.centerX(), textBottom , paint)
+        setImageBitmap(bitmap)
+        invalidate()
+    }
+
+    private fun getColorFromInitials(initials: String) : Int {
         val index = initials.hashCode() % colors.size
-        setBackgroundColor(colors[index])
+        return colors[index]
     }
 
 }
