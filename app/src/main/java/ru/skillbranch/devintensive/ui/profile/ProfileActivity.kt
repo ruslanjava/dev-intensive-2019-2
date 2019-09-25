@@ -5,6 +5,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -45,6 +47,7 @@ class ProfileActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         viewModel.getProfileData().observe(this, Observer { updateUI(it) })
         viewModel.getTheme().observe(this, Observer { updateTheme(it) })
+        viewModel.getValidationErrors().observe(this, Observer { updateRepositoryError(it)})
     }
 
     private fun updateUI(profile: Profile) {
@@ -58,6 +61,16 @@ class ProfileActivity : AppCompatActivity() {
     private fun updateTheme(mode: Int) {
         Log.d("M_ProfileActivity", "updateTheme")
         delegate.setLocalNightMode(mode)
+    }
+
+    private fun updateRepositoryError(hasError: Boolean) {
+        if (hasError) {
+            wr_repository.error = "Невалидный адрес репозитория"
+            et_repository.requestFocus()
+        } else {
+            wr_repository.error = null
+            wr_repository.isErrorEnabled = false
+        }
     }
 
     private fun initViews(savedInstanceState: Bundle?) {
@@ -82,6 +95,19 @@ class ProfileActivity : AppCompatActivity() {
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
         }
+
+        et_repository.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.changeRepository(text.toString())
+            }
+
+        })
 
         btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.skillbranch.devintensive.extensions.isValidRepository
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.repositories.PreferencesRepository
 
@@ -13,6 +14,7 @@ class ProfileViewModel : ViewModel() {
     private val repository : PreferencesRepository = PreferencesRepository
     private val profileData = MutableLiveData<Profile>()
     private val appTheme = MutableLiveData<Int>()
+    private val validationErrors = MutableLiveData<Boolean>()
 
     init {
         Log.d("M_ProfileViewModel", "init view model")
@@ -28,6 +30,8 @@ class ProfileViewModel : ViewModel() {
 
     fun getTheme() : LiveData<Int> = appTheme
 
+    fun getValidationErrors() : LiveData<Boolean> = validationErrors
+
     fun saveProfileData(profile: Profile) {
         repository.saveProfile(profile)
         profileData.value = profile
@@ -40,6 +44,10 @@ class ProfileViewModel : ViewModel() {
             appTheme.value = AppCompatDelegate.MODE_NIGHT_YES
         }
         repository.saveAppTheme(appTheme.value!!)
+    }
+
+    fun changeRepository(repository: String) {
+        validationErrors.value = !repository.isValidRepository()
     }
 
 }
